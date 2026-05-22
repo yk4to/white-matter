@@ -24,13 +24,16 @@ console.log(matter('---\ntitle: Front Matter\n---\nThis is content.'));
 // -> { content: 'This is content.', data: { title: 'Front Matter' } }
 ```
 
-You can disable the built-in cache for a single call.
+By default, `white-matter` does not cache parse results.
+You can enable a simple built-in cache for repeated identical inputs.
 
 ```typescript
 import matter from 'white-matter';
 
-console.log(matter('---\ntitle: Front Matter\n---\nThis is content.', { cache: false }));
+console.log(matter('---\ntitle: Front Matter\n---\nThis is content.', { cache: true }));
 ```
+
+Call `matter.clearCache()` to reset it.
 
 ## Benchmark
 
@@ -43,19 +46,19 @@ npm run benchmark
 The benchmark reports two separate scenarios:
 
 - `Cold parse`: unique input with `white-matter` cache disabled, for parser-to-parser comparison
-- `Warm parse`: identical input with `white-matter` cache enabled, for repeated parse workloads
+- `Warm parse`: identical input with `white-matter` cache explicitly enabled, for repeated parse workloads
 
 Example output:
 
 ```
 Cold parse (unique input, cache disabled)
-gray-matter x 417,352 ops/sec ±0.44% (99 runs sampled)
-white-matter x 724,617 ops/sec ±0.52% (98 runs sampled)
+gray-matter x 434,280 ops/sec ±0.17% (101 runs sampled)
+white-matter x 754,335 ops/sec ±0.14% (99 runs sampled)
 Fastest is white-matter
 
 Warm parse (identical input, cache enabled)
-gray-matter x 1,793,536 ops/sec ±4.49% (90 runs sampled)
-white-matter x 103,798,507 ops/sec ±2.19% (89 runs sampled)
+gray-matter x 1,902,103 ops/sec ±0.84% (98 runs sampled)
+white-matter x 104,284,156 ops/sec ±3.14% (89 runs sampled)
 Fastest is white-matter
 ```
 

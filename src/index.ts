@@ -20,7 +20,7 @@ const matter = ((markdown: string, options: MatterOptions = {}): MatterResult =>
     return { content: markdown, data: undefined };
   }
 
-  if (options.cache === false) {
+  if (options.cache !== true) {
     return parseMatter(markdown);
   }
 

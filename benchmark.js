@@ -7,8 +7,7 @@ const sharedMarkdown = '---\nfoo: bar\nbaz: qux\n---\n# Hello World\n\nThis is a
 const markdowns = Array.from({ length: FIXTURE_COUNT }, (_, index) =>
   `---\nfoo: bar\nbaz: qux\nindex: ${index}\n---\n# Hello World\n\nThis is a test.`
 )
-const whiteMatterNoCacheOptions = { cache: false }
-const grayMatterNoCacheOptions = {}
+const whiteMatterCacheOptions = { cache: true }
 
 const runSuite = (name, setupBenchmarks) => {
   console.log(`\n${name}`)
@@ -36,22 +35,22 @@ runSuite('Cold parse (unique input, cache disabled)', (suite) => {
 
   suite
     .add('gray-matter', () => {
-      grayMatter(markdowns[grayIndex++ % markdowns.length], grayMatterNoCacheOptions)
+      grayMatter(markdowns[grayIndex++ % markdowns.length], {})
     })
     .add('white-matter', () => {
-      whiteMatter(markdowns[whiteIndex++ % markdowns.length], whiteMatterNoCacheOptions)
+      whiteMatter(markdowns[whiteIndex++ % markdowns.length])
     })
 })
 
 runSuite('Warm parse (identical input, cache enabled)', (suite) => {
   whiteMatter.clearCache()
-  whiteMatter(sharedMarkdown)
+  whiteMatter(sharedMarkdown, whiteMatterCacheOptions)
 
   suite
     .add('gray-matter', () => {
       grayMatter(sharedMarkdown)
     })
     .add('white-matter', () => {
-      whiteMatter(sharedMarkdown)
+      whiteMatter(sharedMarkdown, whiteMatterCacheOptions)
     })
 })
