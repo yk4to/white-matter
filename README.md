@@ -1,10 +1,10 @@
 # white-matter
 
-`white-matter` is a YAML front matter parser which is an alternative to [`gray-matter`](https://github.com/jonschlinkert/gray-matter) and includes minimal functionality.
+`white-matter` is a minimal YAML front matter parser and an alternative to [`gray-matter`](https://github.com/jonschlinkert/gray-matter).
 
-Instead of throwing an error like `gray-matter` when a YAML syntax error occurs in `js-yaml` used internally, this package sets `undefined` to `data` and returns `content` (the Markdown part) as usual.
+Unlike `gray-matter`, it does not throw when `js-yaml` encounters invalid YAML. Instead, it returns the Markdown content as usual and sets `data` to `undefined`.
 
-This behavior may be useful in cases where processing must continue even with an invalid front matter format (e.g. Markdown editor plugins).
+This is useful when processing should continue even if the front matter is invalid, for example in Markdown editor plugins.
 
 ## Installation
 
@@ -14,7 +14,7 @@ npm install white-matter
 
 ## Usage
 
-The basic usage is the same as for `gray-matter`, but no advanced options exist now.
+The basic usage is the same as `gray-matter`, but it currently has no advanced options.
 
 ```typescript
 import matter from 'white-matter';
@@ -46,7 +46,7 @@ npm run benchmark
 The benchmark reports two separate scenarios:
 
 - `Cold parse`: unique input with `white-matter` cache disabled, for parser-to-parser comparison
-- `Warm parse`: identical input with `white-matter` cache explicitly enabled, for repeated parse workloads
+- `Warm parse`: identical input with `white-matter` cache enabled, for repeated parse workloads
 
 Example output:
 
