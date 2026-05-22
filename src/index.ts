@@ -51,18 +51,6 @@ const parseMatter = (markdown: string): MatterResult => {
   }
   const frontMatter = str.slice(0, closeIndex);
 
-  const block = frontMatter.replace(/^\s*#[^\n]+/gm, '').trim();
-  if (block === '') {
-    return { content: markdown, data: undefined };
-  }
-
-  let data: unknown;
-  try {
-    data = yaml.load(frontMatter);
-  } catch (err) {
-    data = undefined;
-  }
-
   let content = '';
   if (closeIndex !== len) {
     content = str.slice(closeIndex + close.length);
@@ -72,6 +60,18 @@ const parseMatter = (markdown: string): MatterResult => {
     if (content[0] === '\n') {
       content = content.slice(1);
     }
+  }
+
+  const block = frontMatter.replace(/^\s*#[^\n]+/gm, '').trim();
+  if (block === '') {
+    return { content, data: undefined };
+  }
+
+  let data: unknown;
+  try {
+    data = yaml.load(frontMatter);
+  } catch (err) {
+    data = undefined;
   }
 
   return { content, data };
