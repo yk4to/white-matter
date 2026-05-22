@@ -8,6 +8,7 @@ const markdowns = Array.from({ length: FIXTURE_COUNT }, (_, index) =>
   `---\nfoo: bar\nbaz: qux\nindex: ${index}\n---\n# Hello World\n\nThis is a test.`
 )
 const whiteMatterCacheOptions = { cache: true }
+const grayMatterNoCacheOptions = {}
 
 const runSuite = (name, setupBenchmarks) => {
   console.log(`\n${name}`)
@@ -35,7 +36,7 @@ runSuite('Cold parse (unique input, cache disabled)', (suite) => {
 
   suite
     .add('gray-matter', () => {
-      grayMatter(markdowns[grayIndex++ % markdowns.length], {})
+      grayMatter(markdowns[grayIndex++ % markdowns.length], grayMatterNoCacheOptions)
     })
     .add('white-matter', () => {
       whiteMatter(markdowns[whiteIndex++ % markdowns.length])
