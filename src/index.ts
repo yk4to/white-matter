@@ -36,19 +36,23 @@ const matter = ((markdown: string, options: MatterOptions = {}): MatterResult =>
 
 const parseMatter = (markdown: string): MatterResult => {
   const open = '---';
+  const normalizedMarkdown =
+    markdown.charCodeAt(0) === 0xFEFF ? markdown.slice(1) : markdown;
 
   // If there's no front matter, return the original markdown and undefined data
-  if (!markdown.startsWith(open)) {
-    return { content: markdown, data: undefined };
+  if (!normalizedMarkdown.startsWith(open)) {
+    return { content: normalizedMarkdown, data: undefined };
   }
 
-  const lineBreak = markdown.startsWith('\r\n', open.length) ? '\r\n' : '\n';
-  if (!markdown.startsWith(lineBreak, open.length)) {
-    return { content: markdown, data: undefined };
+  const lineBreak = normalizedMarkdown.startsWith('\r\n', open.length)
+    ? '\r\n'
+    : '\n';
+  if (!normalizedMarkdown.startsWith(lineBreak, open.length)) {
+    return { content: normalizedMarkdown, data: undefined };
   }
 
   const close = lineBreak + open;
-  const str = markdown.slice(open.length + lineBreak.length);
+  const str = normalizedMarkdown.slice(open.length + lineBreak.length);
   const len = str.length;
   let closeIndex = str.indexOf(close);
   if (closeIndex === -1) {
