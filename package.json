@@ -6,6 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
+    "benchmark": "npm run build && node benchmark.js",
     "prepare": "npm run build"
   },
   "repository": {
