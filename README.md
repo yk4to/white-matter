@@ -2,7 +2,7 @@
 
 `white-matter` is a YAML front matter parser which is an alternative to [`gray-matter`](https://github.com/jonschlinkert/gray-matter) and includes minimal functionality.
 
-Instead of throwing an error like `gray-matter` when a YAML syntax error occurs in `js-yaml` used internally, this package sets `undefind` to `data` and returns `content` (the Markdown part) as usual.
+Instead of throwing an error like `gray-matter` when a YAML syntax error occurs in `js-yaml` used internally, this package sets `undefined` to `data` and returns `content` (the Markdown part) as usual.
 
 This behavior may be useful in cases where processing must continue even with an invalid front matter format (e.g. Markdown editor plugins).
 
